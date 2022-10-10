@@ -1,4 +1,5 @@
-const multer = require('multer');
+// const multer = require('multer');
+import multer from "multer";
 
 const MIME_TYPES = {
     'image/jpg': 'jpg',
