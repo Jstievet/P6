@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 // création du modele pour la création des sauces
 const sauceSchema = mongoose.Schema({
     userId: { type: String, required: true },
@@ -14,4 +14,5 @@ const sauceSchema = mongoose.Schema({
     usersDisliked: { type: String, required: true }
 });
 
-module.exports = mongoose.model('Sauce', sauceSchema);
+const Sauce = mongoose.model('Sauce', sauceSchema);
+export default Sauce
