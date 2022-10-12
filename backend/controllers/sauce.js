@@ -2,7 +2,8 @@
 import Sauce from '../models/Sauce.js';
 export const createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
-    delete req.body.id;
+    delete sauceObject.id;
+    delete sauceObject._userId
     const sauce = new Sauce({
         ...sauceObject,
         userId: req.auth.userId,
@@ -22,6 +23,7 @@ export const modifySauce = (req, res, next) => {
 }
 
 export const deleteSauce = (req, res, next) => {
+    console.log('deletesauce');
     Sauce.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: 'sauce supprimé !' }))
         .catch(error => res.status(400).json({ error }));
@@ -38,7 +40,7 @@ export const getAllSauces = (req, res, next) => {
         .then(sauces => res.status(200).json(sauces))
         .catch(error => res.status(400).json({ error }));
 }
-export default Sauce;
+
 // export const likeSauce = (req, res ,next) => {
     
 // }
