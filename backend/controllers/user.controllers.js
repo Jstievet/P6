@@ -28,10 +28,10 @@ export const logIn = (req, res) => {
                         res.status(401).json({ message: "Paire identifiant / Mot de passe incorrecte" })
                     }
                     res.status(200).json({
-                        UserId: user._id,
+                        userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            "CODE_RANDOM_TOKEN",
+                            process.env.SECRET_KEY,
                             { expiresIn: "24h" }
                         )
                     })
