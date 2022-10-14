@@ -1,4 +1,3 @@
-// const Sauce = require('../models/Sauce');
 import Sauce from '../models/Sauce.js';
 export const createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -9,8 +8,6 @@ export const createSauce = (req, res, next) => {
         userId: req.auth.userId,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    
-
     sauce.save()
         .then(() => { res.status(201).json({ message: 'sauce enregistré !' }) })
         .catch(error => { res.status(400).json({ error }) })
@@ -23,11 +20,11 @@ export const modifySauce = (req, res, next) => {
 }
 
 export const deleteSauce = (req, res, next) => {
-        Sauce.deleteOne({ _id: req.params.id })
+    Sauce.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: 'sauce supprimé !' }))
         .catch(error => res.status(400).json({ error }));
-    }
-    
+}
+
 export const getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => res.status(200).json(sauce))
@@ -40,6 +37,3 @@ export const getAllSauces = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 }
 
-// export const likeSauce = (req, res ,next) => {
-    
-// }
