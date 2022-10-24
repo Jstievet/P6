@@ -3,6 +3,7 @@ export const createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     delete sauceObject._userId
+    console.log("sauceObject", sauceObject);
     const sauce = new Sauce({
         ...sauceObject,
         userId: req.auth.userId,
