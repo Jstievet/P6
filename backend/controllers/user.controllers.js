@@ -20,23 +20,26 @@ export const logIn = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                res.status(401).json({ message: "Utilisateur non trouvé" })
+                console.log('test user');
+                res.status(401).json({ message: "Paire identifiant / Mot de passe incorrecte" });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
+                        console.log('test user mdp');
                         res.status(401).json({ message: "Paire identifiant / Mot de passe incorrecte" })
                     }
+                    console.log('req', req.body);
                     res.status(200).json({
-                        UserId: user._id,
+                        userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            "M07d3P4553",
-                            {expiresIn: "24h"}
+                            process.env.SECRET_KEY,
+                            { expiresIn: "24h" }
                         )
                     })
                 })
-                .catch(error => res.status(500).json({ error }))
+                .catch(error => res.status(500).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 }
