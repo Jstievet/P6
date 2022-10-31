@@ -8,7 +8,7 @@ import { router as sauce } from './routes/sauce.js';
 
 export const app = express();
 //conection to MongodB !!!!!!!!!!!! mot de passe en .env avec librairie .env
-mongoose.connect('mongodb+srv://' + process.env.USER + ':' + process.env.MDP + '@cluster0.eeigvqh.mongodb.net/test',
+mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.MDP}@cluster0.eeigvqh.mongodb.net/test`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
