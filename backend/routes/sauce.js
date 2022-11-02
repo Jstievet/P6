@@ -10,7 +10,7 @@ import auth from "../middleware/auth.js";
 router.get('/', auth, getAllSauces);
 router.post('/', auth, mult, createSauce);
 router.get('/:id', auth, getOneSauce);
-router.put('/:id', auth, modifySauce);
+router.put('/:id', auth, mult, modifySauce);
 router.delete('/:id', auth, deleteSauce);
 router.post('/:id/like', auth, likeSauce);
 

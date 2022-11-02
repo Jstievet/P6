@@ -20,17 +20,12 @@ export const logIn = (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-
                 return res.status(401).json({ message: "Paire identifiant / Mot de passe incorrecte" });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        console.log('user', user);
-                        console.log('test user mdp');
-
                         return res.status(401).json({ message: "Paire identifiant / Mot de passe incorrecte" })
-
                     }
                     res.status(200).json({
                         userId: user._id,
@@ -42,14 +37,12 @@ export const logIn = (req, res) => {
                     })
                 })
                 .catch(error => {
-                    console.log('error', error);
                     res.status(500).json({ error });
                 })
         }
             // .catch(error => res.status(500).json({ error }));
         )
         .catch(error => {
-            console.log('error', error);
             res.status(500).json({ error });
         })
 }
