@@ -3,7 +3,6 @@ export const createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
     delete sauceObject._userId
-    console.log("sauceObject", sauceObject);
     const sauce = new Sauce({
         ...sauceObject,
         userId: req.auth.userId,
@@ -15,9 +14,21 @@ export const createSauce = (req, res, next) => {
 };
 
 export const modifySauce = (req, res, next) => {
-    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'sauce modifié !' }))
-        .catch(error => res.status(400).json({ error }));
+    const sauceObject = req.file ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : { ...req.body };
+    delete sauceObject._userId;
+    Sauce.findOne({ _id: req.params.id })
+        .then((sauce) => {
+            Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                .then(() => res.status(200).json({ message: 'sauce modifié !' }))
+                .catch(error => res.status(400).json({ error }));
+
+        })
+        .catch((error) => {
+            res.status(400).json({ error });
+        });
 }
 
 export const deleteSauce = (req, res, next) => {
